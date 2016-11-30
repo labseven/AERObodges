@@ -1,6 +1,20 @@
 #include <SPI.h>
 #include "mcp_can.h"
 
+
+// Pins: 
+//D2: INT
+//D10(Configurable): CS
+//D11: MOSI
+//D12: MISO
+//D13: SCK
+
+//PWR: 5v
+//GND: GND
+
+
+MCP_CAN CAN(10);
+
 INT32U canId = 0x000;
 
 unsigned char len = 0;
@@ -34,12 +48,14 @@ void loop()
     {
         CAN.readMsgBuf(&len, buf);
         canId = CAN.getCanId();
-        Serial.print("<");Serial.print(canId);Serial.print(",");
+        
+//        Serial.print((String)buf);
+//        Serial.print("<");Serial.print(canId);Serial.print(",");
         for(int i = 0; i<len; i++)
         {
-            Serial.print(buf[i]);Serial.print(",");
+            Serial.print((char)buf[i]);
         }
-        Serial.print(">");
+//        Serial.print(">");
         Serial.println();
     }
 }
